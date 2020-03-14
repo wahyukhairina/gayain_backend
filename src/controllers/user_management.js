@@ -11,7 +11,7 @@ module.exports = {
       const result = await userModel.getUser(name);
       miscHelper.response(response, 200, result);
     } catch (error) {
-      miscHelper.customErrorResponse(response, 404, 'Internal server error');
+      miscHelper.customErrorResponse(response, 404, 'user not found');
     }
   },
   updateData: async (request, response) => {
@@ -32,7 +32,7 @@ module.exports = {
       const result = await userModel.updateData(data, userId);
       miscHelper.response(response, 200, result);
     } catch (error) {
-      response.json(status, 400, 'fail update');
+      miscHelper.customErrorResponse(response, 400, 'Fail update user');
     }
   },
   deleteData: async (request, response) => {
@@ -41,7 +41,7 @@ module.exports = {
       const result = await userModel.deleteData(userId);
       miscHelper.response(response, 200, userId);
     } catch (error) {
-      response.json('Fail to delete user');
+      miscHelper.customErrorResponse(response, 400, 'Fail delete');
     }
   },
   register: async (request, response) => {
@@ -62,7 +62,7 @@ module.exports = {
       const result = await userModel.register(data);
       response.json(data);
     } catch (error) {
-      response.json('Failed register');
+      miscHelper.customErrorResponse(response, 400, 'Fail register');
     }
   },
   login: async (request, response) => {
@@ -92,7 +92,7 @@ module.exports = {
 
       response.json(dataUser);
     } else {
-      miscHelper.customErrorResponse(response, 404, 'Internal server error');
+      miscHelper.customErrorResponse(response, 400, 'Fail login');
     }
   },
 };
