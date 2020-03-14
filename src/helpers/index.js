@@ -33,7 +33,7 @@ module.exports = {
     result.result = data
     return response.status(result.status).json(result)
   },
-  cutomErrorResponse: (response, status, message) => {
+  customErrorResponse: (response, status, message) => {
     const result = {}
     result.status = status || 400
     result.message = message
