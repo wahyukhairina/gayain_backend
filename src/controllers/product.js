@@ -18,8 +18,7 @@ module.exports = {
         //  console.log(tPage, tData)
          miscHelper.response(response, 200, result)
      } catch (error) {
-        //  console.log(error)
-         miscHelper.cutomErrorResponse(response, 404, 'Not Found!')
+         miscHelper.customErrorResponse(response, 404, 'Not Found!')
        }   
     },
     getDetail : async (request, response) => {
@@ -50,10 +49,48 @@ module.exports = {
             console.log(request.file)      
             } 
         catch (error) {
-            // console.log(request.files)
             console.log(error)
-            miscHelper.cutomErrorResponse(response, 404, 'Internal Server Error!')
+            miscHelper.customErrorResponse(response, 404, 'Internal Server Error!')
           }   
+       },
+
+       updateProduct : async (request, response) => {
+        console.log(request.body)
+        try {
+            const { name, category, price, stock } = request.body
+            data = {
+                name,
+                image : `${IP}:${port}/upload/${request.file.filename}`, 
+                category,
+                stock,
+                price,
+                updated : new Date()
+
+            }
+            const productId = request.params.productId
+            const result = await productModel.updateProduct(data, productId)
+            const modelProduct = {
+                ...data,
+                id: productId
+            }
+            miscHelper.response(response, 200, modelProduct)
+        } catch (error) {
+            console.log(error)
+            // miscHelper.customErrorResponse(response, 404, 'Internal Server Error!')
+          }   
+       },
+
+       deleteProduct : async (request, response) => {
+        try {
+            const productId = request.params.productId
+            const result = await productModel.deleteProduct(productId)
+            const deleteModel = {
+                        id : productId
+                    }
+            miscHelper.response(response, 200, deleteModel)
+        } catch (error) {
+            miscHelper.customErrorResponse(response, 404, 'Internal Server Error!')
+          }
        }
        
 }
