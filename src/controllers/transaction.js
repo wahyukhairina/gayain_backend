@@ -2,28 +2,51 @@ const models = require('../models/transaction');
 const helpers = require('../helpers');
 
 module.exports = {
-  payment: async (request, response) => {
+  pendingPayment: async (request, response) => {
     try {
-      const payment = request.body;
-      if (payment === undefined || payment === '')
-        return console.log('Tidak ada data');
+      const pendingPayment = request.body
+      if (pendingPayment === undefined || pendingPayment === '') return 
+      console.log('pendingPayment Undifined')
 
-      var a = 0;
-      await payment.products.map(e => {
+      var dataArray = 0
+      await pendingPayment.products.map(e => {
         const data = {
-          id_transaction: payment.id_transaction,
+          id_transaction: pendingPayment.id_transaction,
           productId: e.productId,
-          stock: e.quantity,
-        };
-        const status = {
-          status: status,
-        };
+          stock: e.quantity
+        }
         const date = {
-          date_added: new Date(),
-        };
-        models.payment(data, a, date);
-        a++;
-      });
+          date_added: new Date()
+        }
+        models.pendingPayment(data, dataArray, date)
+        dataArray++
+      })
+
+      helpers.response(response, 200, 'OK')
+    } catch (error) {
+      console.log(error)
+      helpers.cutomErrorResponse(response, 400, 'Internal server error')
+    }
+  },
+
+  endPayment: async (request, response) => {
+    try {
+      const endPayment = request.body
+      if (endPayment === undefined || endPayment === '') return console.log('Tidak ada data')
+
+      var a = 0
+      await endPayment.products.map(e => {
+        const data = {
+          id_transaction: endPayment.id_transaction,
+          productId: e.productId,
+          stock: e.quantity
+        }
+        const date = {
+          date_added: new Date()
+        }
+        models.endPayment(data, a, date)
+        a++
+      })
 
       helpers.response(response, 200, 'OK');
     } catch (error) {
@@ -31,4 +54,5 @@ module.exports = {
       helpers.customErrorResponse(response, 400, 'Internal server error');
     }
   },
-};
+
+}
