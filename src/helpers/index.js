@@ -41,6 +41,6 @@ module.exports = {
     result.status = status || 400;
     result.message = message;
     result.error = error;
-    return response.status(result.status).json(result);
+    return response.status(result.status, result.error).json(result);
   },
 };
