@@ -1,8 +1,9 @@
 const express = require('express')
 const Route = express.Router()
-const { payment } = require('../controllers/transaction')
+const { pendingPayment, endPayment } = require('../controllers/transaction')
 
 Route
-  .post('/', payment)
+  .post('/', pendingPayment)
+  .patch('/', endPayment)
 
 module.exports = Route
