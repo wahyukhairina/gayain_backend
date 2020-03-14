@@ -60,9 +60,9 @@ module.exports = {
         updated: new Date(),
       };
       const result = await userModel.register(data);
-      response.json(data);
+      miscHelper.response(response, 200, result);
     } catch (error) {
-      miscHelper.customErrorResponse(response, 400, 'Fail register');
+      miscHelper.customErrorResponse(response, 400, 'user has been added');
     }
   },
   login: async (request, response) => {
@@ -92,7 +92,7 @@ module.exports = {
 
       response.json(dataUser);
     } else {
-      miscHelper.customErrorResponse(response, 400, 'Fail login');
+      miscHelper.customErrorResponse(response, 400, 'Fail login', error);
     }
   },
 };

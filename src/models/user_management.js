@@ -4,11 +4,21 @@ module.exports = {
   register: data => {
     return new Promise((resolve, reject) => {
       connection.query(
-        'INSERT INTO user_management SET ?',
-        data,
+        'SELECT * FROM user_management WHERE email = ?',
+        data.email,
         (error, result) => {
-          if (error) reject(new Error(error));
-          resolve(result);
+          if (result.length > 0) {
+            reject(new Error('User has been added'));
+          } else {
+            connection.query(
+              'INSERT INTO user_management SET ?',
+              data,
+              (error, result) => {
+                if (error) reject(new Error(error));
+                resolve(result);
+              }
+            );
+          }
         }
       );
     });

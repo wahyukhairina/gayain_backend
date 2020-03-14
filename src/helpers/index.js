@@ -36,10 +36,11 @@ module.exports = {
     result.result = data;
     return response.status(result.status).json(result);
   },
-  customErrorResponse: (response, status, message) => {
+  customErrorResponse: (response, status, message, error) => {
     const result = {};
     result.status = status || 400;
     result.message = message;
+    result.error = error;
     return response.status(result.status).json(result);
   },
 };
