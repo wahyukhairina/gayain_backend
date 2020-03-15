@@ -34,7 +34,7 @@ module.exports = {
   },
 
   customErrorResponse: (response, status, message) => {
-    const result = {};
+    const result = {}
 
     result.status = status || 400;
     result.message = message;

@@ -4,7 +4,10 @@
   "description": "ecommerce",
   "main": "index.js",
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^0.19.2",
+=======
+>>>>>>> cb1b2368382dd660433fe450c36a8544ca15e094
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
@@ -21,12 +24,13 @@
     "pagination": "^0.4.6",
     "path": "^0.12.7",
     "redis": "^3.0.2",
-    "uniqid": "^5.2.0"
+    "uniqid": "^5.2.0",
+    "uuidv4": "^6.0.6"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "gayainTeam",
   "license": "ISC"
