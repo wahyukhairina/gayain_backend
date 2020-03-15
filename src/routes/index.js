@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require('express');
 const Route = express.Router();
 const posRouter = require('./product');
@@ -10,5 +11,13 @@ Route.use('/product', posRouter)
   .use('/uploads', express.static('./uploads'))
   .use('/transaction', transactionRouter);
 // .use('/category', categoryRouter)
+=======
+const express = require('express')
+const Route = express.Router()
+const transactionRouter = require('./transaction')
+
+Route
+  .use('/transaction', transactionRouter)
+>>>>>>> transaction
 
 module.exports = Route;

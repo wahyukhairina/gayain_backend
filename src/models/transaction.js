@@ -3,7 +3,7 @@ const con = require('../configs/connection')
 module.exports = {
   pendingPayment: (data, dataArray, date) => {
     return new Promise((resolve, reject) => {
-      con.query(`SELECT * FROM product WHERE id= ${data.productId}`, (error, result) => {
+      con.query(`SELECT * FROM product WHERE id= "${data.productId}"`, (error, result) => {
         if (result.length > 0) {
           var stock = result[0].stock - data.stock
           var price = result[0].price * data.stock
@@ -29,14 +29,14 @@ module.exports = {
 
   endPayment: (data, a, date) => {
     return new Promise((resolve, reject) => {
-      con.query(`SELECT * FROM product WHERE id= ${data.productId}`, (error, result) => {
+      con.query(`SELECT * FROM product WHERE id= "${data.productId}"`, (error, result) => {
         if (result.length > 0) {
           var stock = result[0].stock - data.stock
           var price = result[0].price * data.stock
 
           if (a === 0) { con.query(`UPDATE transaction SET ?, totalPayment=0, status="SUCSESS" WHERE id_transaction="${data.id_transaction}"`, date) }
 
-          con.query(`UPDATE product SET stock = ${stock} WHERE id=${data.productId}`, (error, result) => {
+          con.query(`UPDATE product SET stock = ${stock} WHERE id="${data.productId}"`, (error, result) => {
             if (error) reject(new Error(error))
             con.query(`SELECT sum(price) as tPrice FROM detail_transaction WHERE id_transaction="${data.id_transaction}"`, (error, result) => {
               if (error) reject(new Error(error))
