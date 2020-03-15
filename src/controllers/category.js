@@ -1,6 +1,7 @@
 const categoryModel = require('../models/category')
 const miscHelper = require('../helpers')
 const uuidv4 = require('uuid/v4')
+const {IP, port} = require('../configs/index')
 
 module.exports={
     listCategory : async (request, response) =>{
@@ -18,6 +19,7 @@ module.exports={
             const category_id = uuidv4()
             const data = {
                 category_id,
+                image: `${IP}:${port}/upload/${request.file.filename}`,
                 name: request.body.name,
                 created: new Date(),
                 updated: new Date()
@@ -33,6 +35,7 @@ module.exports={
         try{
             const data = {
                 name : request.body.name,
+                image: `${IP}:${port}/upload/${request.file.filename}`,
                 updated: new Date()
             }
             const categoryId= request.params.categoryId
