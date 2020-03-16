@@ -14,6 +14,7 @@ module.exports = {
       miscHelper.customErrorResponse(response, 404, 'user not found');
     }
   },
+  //
   updateData: async (request, response) => {
     try {
       const userId = request.params.userId;
@@ -25,6 +26,9 @@ module.exports = {
         email: request.body.email,
         username: request.body.username,
         password: hashPassword.passwordHash,
+        alamat: request.body.alamat,
+        provinsi: request.body.provinsi,
+        kota: request.body.kota,
         salt: hashPassword.salt,
         status: request.body.status || '2',
         updated: new Date(),
@@ -35,6 +39,7 @@ module.exports = {
       miscHelper.customErrorResponse(response, 400, 'Fail update user');
     }
   },
+  //
   deleteData: async (request, response) => {
     try {
       const userId = request.params.userId;
@@ -44,6 +49,7 @@ module.exports = {
       miscHelper.customErrorResponse(response, 400, 'Fail delete');
     }
   },
+  //
   register: async (request, response) => {
     try {
       const id = uuidv4();
@@ -54,13 +60,16 @@ module.exports = {
         email: request.body.email,
         username: request.body.username,
         password: hashPassword.passwordHash,
+        alamat: request.body.alamat,
+        provinsi: request.body.provinsi,
+        kota: request.body.kota,
         salt: hashPassword.salt,
         status: request.body.status || '2',
         created: new Date(),
         updated: new Date(),
       };
       const result = await userModel.register(data);
-      miscHelper.response(response, 200, result);
+      miscHelper.response(response, 200, data);
     } catch (error) {
       miscHelper.customErrorResponse(
         response,
@@ -69,34 +78,41 @@ module.exports = {
       );
     }
   },
+  //
   login: async (request, response) => {
-    const data = {
-      password: request.body.password,
-      email: request.body.email,
-    };
+    try {
+      const data = {
+        password: request.body.password,
+        email: request.body.email,
+      };
 
-    const emailValid = await userModel.checkEmail(data.email);
-    const dataUser = emailValid[0];
-    const hashPassword = helper.setPassword(data.password, dataUser.salt);
+      const emailValid = await userModel.checkEmail(data.email);
+      const dataUser = emailValid[0];
+      const hashPassword = helper.setPassword(data.password, dataUser.salt);
+      if (
+        hashPassword.passwordHash === dataUser.password &&
+        emailValid.length > 0
+      ) {
+        const token = JWT.sign(
+          {
+            email: dataUser.email,
+            id: dataUser.id,
+          },
+          JWT_KEY,
+          { expiresIn: '9h' }
+        );
 
-    if (hashPassword.passwordHash === dataUser.password) {
-      const token = JWT.sign(
-        {
-          email: dataUser.email,
-          id: dataUser.id,
-        },
-        JWT_KEY,
-        { expiresIn: '9h' }
-      );
+        delete dataUser.salt;
+        delete dataUser.password;
 
-      delete dataUser.salt;
-      delete dataUser.password;
+        dataUser.token = token;
 
-      dataUser.token = token;
-
-      response.json(dataUser);
-    } else {
-      miscHelper.customErrorResponse(response, 400, 'Fail login', error);
+        response.json(dataUser);
+      } else {
+        miscHelper.customErrorResponse(response, 400, 'wrong password');
+      }
+    } catch (error) {
+      miscHelper.customErrorResponse(response, 400, 'email not found');
     }
   },
 };
