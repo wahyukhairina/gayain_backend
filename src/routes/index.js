@@ -5,7 +5,7 @@ const userRoute = require('./user')
 const transactionRouter = require('./transaction')
 const categoryRouter = require('./category')
 
-Route
+route
   .use('/product', posRouter)
   .use('/user', userRoute)
   .use('/upload', express.static('./upload'))
