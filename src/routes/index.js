@@ -5,10 +5,10 @@ const userRoute = require('./user')
 const transactionRouter = require('./transaction')
 const categoryRouter = require('./category')
 
-Route
+route
   .use('/product', posRouter)
   .use('/user', userRoute)
-  .use('/uploads', express.static('./uploads'))
+  .use('/upload', express.static('./upload'))
   .use('/transaction', transactionRouter)
   .use('/category', categoryRouter)
 
