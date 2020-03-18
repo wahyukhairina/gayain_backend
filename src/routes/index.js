@@ -4,11 +4,8 @@ const posRouter = require('./product')
 const userRoute = require('./user')
 const transactionRouter = require('./transaction')
 const categoryRouter = require('./category')
-<<<<<<< HEAD
 const courierRouter = require('./provinces')
-=======
 const promoRouter = require('./promo')
->>>>>>> manual
 
 route
   .use('/promo', promoRouter)

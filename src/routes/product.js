@@ -4,7 +4,7 @@ const route = express.Router()
 
 const {getAll, getDetail, inputProduct, updateProduct, deleteProduct, getNew } = require('../controllers/product')
 
-const { uploadImage } = require('../controllers/upload')
+const { uploadImage } = require('../controllers/upload') 
 
 route
     .get('/new', getNew)

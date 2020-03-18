@@ -96,6 +96,7 @@ module.exports = {
       }
       miscHelper.response(response, 200, modelProduct)
     } catch (error) {
+      console.log(err)
       miscHelper.customErrorResponse(response, 404, 'Internal Server Error!')
     }
   },
