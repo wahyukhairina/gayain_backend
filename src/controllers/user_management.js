@@ -71,11 +71,12 @@ module.exports = {
       const result = await userModel.register(data);
       miscHelper.response(response, 200, data);
     } catch (error) {
-      miscHelper.customErrorResponse(
-        response,
-        400,
-        'Register fail user has been added'
-      );
+      // miscHelper.customErrorResponse(
+      //   response,
+      //   400,
+      //   'Register fail user has been added'
+      // );
+      console.log(error)
     }
   },
   //

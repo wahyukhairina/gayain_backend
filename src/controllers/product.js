@@ -4,31 +4,45 @@ const { IP, port } = require('../configs')
 const uuidv4 = require('uuid/v4')
 
 module.exports = {
-  getAll: async (request, response) => {
-    try {
-      const category = request.query.category || ''
-      const limit = request.query.limit || 666
-      const activePage = request.query.page || 1
-      const searchName = request.query.name || ''
-      const sortBy = request.query.sortBy || 'id'
-      const sort = request.query.sort || 'ASC'
-      const pagination = {
-        activePage, limit, sortBy, sort
-      }
+    getAll: async (request, response) => {
+      console.log(request.query)
+        try {
+          const category = request.query.category || ''
+          const limit = request.query.limit || 666
+          const activePage = request.query.page || 1
+          const searchName = request.query.name || ''
+          const sortBy = request.query.sortBy || 'id'
+          const sort = request.query.sort || 'ASC'
+          const pagination = {
+            activePage, limit, sortBy, sort
+          }
+    
+          const totalData = await productModel.countData(searchName, category)
+          const totalPages = Math.ceil(totalData / limit)
+          const pager = {
+            totalPages
+          }
+          const result = await productModel.getAll(searchName, pagination, category)
+    
+          miscHelper.response(response, 200, result, pager)
+        } catch (error) {
+          console.log(error)
+          miscHelper.cutomErrorResponse(response, 400, 'Internal server error')
+        }
+      },
 
-      const totalData = await productModel.countData(searchName, category)
-      const totalPages = Math.ceil(totalData / limit)
-      const pager = {
-        totalPages
-      }
-      const result = await productModel.getAll(searchName, pagination, category)
+      getNew: async (request, response) => {
+        try { 
+          const result = await productModel.getNew()
+          miscHelper.response(response, 200, result)
 
-      miscHelper.response(response, 200, result, pager)
-    } catch (error) {
-      console.log(error)
-      miscHelper.cutomErrorResponse(response, 400, 'Internal server error')
-    }
-  },
+        }
+        catch (error) {
+          console.log(error)
+          miscHelper.cutomErrorResponse(response, 400, 'Internal server error')
+        }
+      },
+
   getDetail: async (request, response) => {
     try {
       const productId = request.params.productId
@@ -38,6 +52,7 @@ module.exports = {
       miscHelper.customErrorResult(response, 404, 'Internal Server Error!')
     }
   },
+
   inputProduct: async (request, response) => {
     try {
       const id = uuidv4()
