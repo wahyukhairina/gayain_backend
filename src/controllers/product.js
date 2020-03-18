@@ -5,6 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
     getAll: async (request, response) => {
+      console.log(request.query)
         try {
           const category = request.query.category || ''
           const limit = request.query.limit || 666
@@ -29,6 +30,19 @@ module.exports = {
           miscHelper.cutomErrorResponse(response, 400, 'Internal server error')
         }
       },
+
+      getNew: async (request, response) => {
+        try { 
+          const result = await productModel.getNew()
+          miscHelper.response(response, 200, result)
+
+        }
+        catch (error) {
+          console.log(error)
+          miscHelper.cutomErrorResponse(response, 400, 'Internal server error')
+        }
+      },
+
   getDetail: async (request, response) => {
     try {
       const productId = request.params.productId;
@@ -38,6 +52,7 @@ module.exports = {
       miscHelper.customErrorResult(response, 404, "Internal Server Error!");
     }
   },
+
   inputProduct: async (request, response) => {
     try {
       const id = uuidv4();

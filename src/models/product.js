@@ -20,6 +20,7 @@ module.exports = {
           product.id,
           product.name,
           category.name AS category,
+          product.brand,
           product.image,
           product.price,
           product.stock,
@@ -31,7 +32,7 @@ module.exports = {
       WHERE
           product.category = category.category_id
             AND
-            product.name LIKE '%${searchName}%' AND category.name LIKE '%${category}%'
+            product.name LIKE '%${searchName}%' AND category.category_id LIKE '%${category}%'
             ORDER BY product.${pagination.sortBy} ${pagination.sort}
             LIMIT ${firstData},${pagination.limit}
             `, (error, result) => {
@@ -40,6 +41,19 @@ module.exports = {
           })
         })
       },
+
+      getNew: () => {
+        return new Promise((resolve, reject) => {
+          connection.query(
+            "SELECT * FROM product ORDER BY created DESC LIMIT 4", (error, result) => {
+              if (error) reject (new Error(error));
+              resolve(result);
+            }
+          ) 
+        })
+      },
+
+
   getDetail: productId => {
     return new Promise((resolve, reject) => {
       connection.query(

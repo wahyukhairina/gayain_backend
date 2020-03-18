@@ -1,4 +1,4 @@
-const categoryModel = require('../models/promo')
+const promoModel = require('../models/promo')
 const miscHelper = require('../helpers')
 const uuidv4 = require('uuid/v4')
 const {IP, port} = require('../configs/index')
@@ -6,10 +6,11 @@ const {IP, port} = require('../configs/index')
 module.exports={
     listPromo : async (request, response) =>{
         try{
-            const searchName = request.body.name || ''
-            const result = await promoModel.listPromo(searchName)
+            const name = request.query.name || ''
+            const result = await promoModel.listPromo(name)
             miscHelper.response(response, 200, result)
         } catch (error){
+            console.log('promo')
 
             miscHelper.customErrorResponse(response, 400, 'Promo not found!')
         }
@@ -22,9 +23,12 @@ module.exports={
                 image: `${IP}:${port}/upload/${request.file.filename}`,
                 description: request.body.description,
                 name: request.body.name,
+                promo_category: request.body.promo_category,
                 created: new Date(),
                 updated: new Date()
             }
+            console.log(data)
+            console.log('ini')
             const result = await promoModel.inputPromo(data)
 
             miscHelper.response(response, 200, data)

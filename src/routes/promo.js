@@ -1,7 +1,7 @@
 const express = require('express')
 const route = express.Router()
 
-const { listPromo, inputPromo, editPromo, deletePromo }=require('../controllers/category')
+const { listPromo, inputPromo, editPromo, deletePromo }=require('../controllers/promo')
 const { uploadImage } = require('../controllers/upload')
 
 route

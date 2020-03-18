@@ -4,8 +4,10 @@ const posRouter = require('./product')
 const userRoute = require('./user')
 const transactionRouter = require('./transaction')
 const categoryRouter = require('./category')
+const promoRouter = require('./promo')
 
 route
+  .use('/promo', promoRouter)
   .use('/product', posRouter)
   .use('/user', userRoute)
   .use('/upload', express.static('./upload'))
