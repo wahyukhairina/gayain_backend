@@ -4,12 +4,14 @@ const posRouter = require('./product')
 const userRoute = require('./user')
 const transactionRouter = require('./transaction')
 const categoryRouter = require('./category')
+const courierRouter = require('./provinces')
 
-Route
+route
   .use('/product', posRouter)
   .use('/user', userRoute)
   .use('/upload', express.static('./upload'))
   .use('/transaction', transactionRouter)
   .use('/category', categoryRouter)
+  .use('/courier', courierRouter)
 
-module.exports = route;
+module.exports = route

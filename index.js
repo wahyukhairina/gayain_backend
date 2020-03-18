@@ -1,4 +1,4 @@
-const {port} = require('./src/configs')
+const { port } = require('./src/configs')
 const express = require('express')
 const app = express()
 const logger = require('morgan')
@@ -7,9 +7,9 @@ const mainNavigation = require('./src/routes')
 const cors = require('cors')
 
 app.use(cors('*'))
-app.listen(port, () => console.log('\n This server is running'))
+app.listen(port, () => console.log(`\n This server is running ${port}`))
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended : false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/', mainNavigation)
