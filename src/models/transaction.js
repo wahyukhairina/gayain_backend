@@ -50,6 +50,41 @@ module.exports = {
         } else reject(new Error(error))
       })
     })
+  },
+
+  historyTransaction: (id_transaction) => {
+    return new Promise((resolve, reject) => {
+      con.query(`SELECT
+      product.name,
+      detail_transaction.stock,
+      detail_transaction.id_transaction,
+      detail_transaction.price
+  FROM
+      detail_transaction,
+      product
+  WHERE
+      detail_transaction.productId = product.id AND detail_transaction.id_transaction = '${id_transaction}'
+  `, (error, result) => {
+        if (error) reject(new Error(error))
+        resolve(result)
+      })
+    })
+  },
+  recapitulationTransaction: () => {
+    return new Promise((resolve, reject) => {
+      con.query('SELECT * FROM transaction ORDER BY date_added', (error, result) => {
+        if (error) reject(new Error(error))
+        resolve(result)
+      })
+    })
+  },
+  weeklyTransaction: () => {
+    return new Promise((resolve, reject) => {
+      con.query('SELECT SUM(totalPayment) as totalPayment, date_added FROM transaction GROUP BY date_added ORDER BY date_added DESC LIMIT 14', (error, result) => {
+        if (error) reject(new Error(error))
+        resolve(result)
+      })
+    })
   }
 
 }

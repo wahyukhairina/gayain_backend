@@ -55,4 +55,32 @@ module.exports = {
     }
   },
 
+  historyTransaction: async (request, response) => {
+    try {
+      const id_transaction = request.params.id_transaction
+      const result = await models.historyTransaction(id_transaction)
+      helpers.response(response, 200, result)
+    } catch (error) {
+      console.log(error)
+      helpers.customErrorResponse(response, 400, 'Internal server error')
+    }
+  },
+  recapitulationTransaction: async (request, response) => {
+    try {
+      const result = await models.recapitulationTransaction()
+      helpers.response(response, 200, result)
+    } catch (error) {
+      console.log(error)
+      helpers.customErrorResponse(response, 400, 'Internal server error')
+    }
+  },
+  weeklyTransaction: async (request, response) => {
+    try {
+      const result = await models.weeklyTransaction()
+      helpers.response(response, 200, result)
+    } catch (error) {
+      console.log(error)
+      helpers.customErrorResponse(response, 400, 'Internal server error')
+    }
+  }
 }

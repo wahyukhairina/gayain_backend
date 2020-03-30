@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-const userModel = require("../models/user_management");
-const helper = require("../helpers");
-const JWT = require("jsonwebtoken");
-const miscHelper = require("../helpers");
-const { JWT_KEY } = require("../configs");
-const uuidv4 = require("uuid/v4");
-=======
 const userModel = require('../models/user_management');
 const helper = require('../helpers');
 const JWT = require('jsonwebtoken');
@@ -13,7 +5,6 @@ const miscHelper = require('../helpers');
 const { JWT_KEY } = require('../configs');
 const { IP, port } = require('../configs');
 const uuidv4 = require('uuid/v4');
->>>>>>> 90e71ff9f0de295b805d8d1f6c6c7e9615266b2f
 module.exports = {
   getUser: async (request, response) => {
     try {
@@ -99,9 +90,6 @@ module.exports = {
         updated: new Date()
       };
       const result = await userModel.register(data);
-<<<<<<< HEAD
-      miscHelper.response(response, 200, result);
-=======
       miscHelper.response(response, 200, data);
     } const data = {
       name: request.body.name,
@@ -120,7 +108,6 @@ module.exports = {
     const result = await userModel.register(data);
     miscHelper.response(response, 200, data);
 
->>>>>>> 90e71ff9f0de295b805d8d1f6c6c7e9615266b2f
     } catch (error) {
       miscHelper.customErrorResponse(
         response,
