@@ -20,7 +20,6 @@ module.exports = {
           product.id,
           product.name,
           category.name AS category,
-          product.brand,
           product.image,
           product.price,
           product.stock,
