@@ -1,15 +1,19 @@
 const express = require('express')
-const Route = express.Router()
-// const posRouter = require('./product')
-// const userRoute = require('./user')
+const route = express.Router()
+const posRouter = require('./product')
+const userRoute = require('./user')
 const transactionRouter = require('./transaction')
-// const categoryRouter = require('./category')
+const categoryRouter = require('./category')
+const courierRouter = require('./provinces')
+const promoRouter = require('./promo')
 
-Route
-  // .use('/product', posRouter)
-  // .use('/user', userRoute)
-  // .use('/uploads', express.static('./uploads'))
+route
+  .use('/promo', promoRouter)
+  .use('/product', posRouter)
+  .use('/user', userRoute)
+  .use('/upload', express.static('./upload'))
   .use('/transaction', transactionRouter)
-  // .use('/category', categoryRouter)
+  .use('/category', categoryRouter)
+  .use('/courier', courierRouter)
 
-module.exports = Route
+module.exports = route

@@ -1,7 +1,10 @@
 const crypto = require('crypto')
 module.exports = {
-  generateSalt: (length) => {
-    return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length)
+  generateSalt: length => {
+    return crypto
+      .randomBytes(Math.ceil(length / 2))
+      .toString('hex')
+      .slice(0, length)
   },
   setPassword: (password, salt) => {
     const hash = crypto.createHmac('sha512', salt)
@@ -12,6 +15,7 @@ module.exports = {
       passwordHash: value
     }
   },
+
   customResponse: (response, status, result, pagination) => {
     var page = []
     var data = {}
@@ -33,8 +37,10 @@ module.exports = {
     result.result = data
     return response.status(result.status).json(result)
   },
-  cutomErrorResponse: (response, status, message) => {
+
+  customErrorResponse: (response, status, message) => {
     const result = {}
+
     result.status = status || 400
     result.message = message
     return response.status(result.status).json(result)
