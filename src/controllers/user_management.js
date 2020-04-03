@@ -19,21 +19,21 @@ module.exports = {
   updateData: async (request, response) => {
     try {
       const userId = request.params.userId;
-      const salt = helper.generateSalt(18);
+      // const salt = helper.generateSalt(18);
 
-      const hashPassword = helper.setPassword(request.body.password, salt);
+      // const hashPassword = helper.setPassword(request.body.password, salt);
       if(!request.file || Object.keys(request.file).length === 0){
         const data = {
-          name: request.body.name,
+          // name: request.body.name,
           image: `${IP}:${port}/upload/navy-jeans.jpg`,
-          email: request.body.email,
-          username: request.body.username,
-          password: hashPassword.passwordHash,
-          alamat: request.body.alamat,
-          provinsi: request.body.provinsi,
-          kota: request.body.kota,
-          salt: hashPassword.salt,
-          status: request.body.status || '2',
+          // email: request.body.email,
+          // username: request.body.username,
+          // password: hashPassword.passwordHash,
+          // alamat: request.body.alamat,
+          // provinsi: request.body.provinsi,
+          // kota: request.body.kota,
+          // salt: hashPassword.salt,
+          // status: request.body.status || '2',
           updated: new Date(),
         };
         const result = await userModel.updateData(data, userId);
@@ -43,27 +43,29 @@ module.exports = {
         }
         miscHelper.response(response, 200, newData);
       }
-
+console.log('foto',request.file.fileName)
       const data = {
-        name: request.body.name,
+        // name: request.body.name,
         image: `${IP}:${port}/upload/${request.file.fileName}`,
-        email: request.body.email,
-        username: request.body.username,
-        password: hashPassword.passwordHash,
-        alamat: request.body.alamat,
-        provinsi: request.body.provinsi,
-        kota: request.body.kota,
-        salt: hashPassword.salt,
-        status: request.body.status || '2',
+        // email: request.body.email,
+        // username: request.body.username,
+        // password: hashPassword.passwordHash,
+        // alamat: request.body.alamat,
+        // provinsi: request.body.provinsi,
+        // kota: request.body.kota,
+        // salt: hashPassword.salt,
+        // status: request.body.status || '2',
         updated: new Date(),
       };
+      console.log (image)
       const result = await userModel.updateData(data, userId);
       const newData ={
         ...data,
         id:userId}
       miscHelper.response(response, 200,newData);
     } catch (error) {
-      miscHelper.customErrorResponse(response, 400, 'Fail update user');
+      console.log(error)
+      // miscHelper.customErrorResponse(response, 400, 'Fail update user');
     }
   },
   //
@@ -71,7 +73,10 @@ module.exports = {
     try {
       const userId = request.params.userId;
       const result = await userModel.deleteData(userId);
-      miscHelper.response(response, 200, userId);
+      const deleteUser = {
+        id: userId
+      }
+      miscHelper.response(response, 200, deleteUser);
     } catch (error) {
       miscHelper.customErrorResponse(response, 400, 'Fail delete');
     }
@@ -84,6 +89,7 @@ module.exports = {
       const hashPassword = helper.setPassword(request.body.password, salt);
       
       if(!request.file || Object.keys(request.file).length === 0){
+       
         const data = {
         name: request.body.name,
         image: `${IP}:${port}/upload/navy-jeans.jpg`,
@@ -98,6 +104,7 @@ module.exports = {
         created: new Date(),
         updated: new Date(),
       };
+      console.log(data)
       const result = await userModel.register(data);
       miscHelper.response(response, 200, data);
     } const data = {
