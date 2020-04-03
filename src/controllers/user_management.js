@@ -8,14 +8,13 @@ const uuidv4 = require('uuid/v4');
 module.exports = {
   getUser: async (request, response) => {
     try {
-      const name = request.query.name || '';
+      const name = request.query.name || "";
       const result = await userModel.getUser(name);
       miscHelper.response(response, 200, result);
     } catch (error) {
-      miscHelper.customErrorResponse(response, 404, 'user not found');
+      miscHelper.customErrorResponse(response, 404, "user not found");
     }
   },
-  //
   updateData: async (request, response) => {
     try {
       const userId = request.params.userId;
@@ -47,6 +46,7 @@ console.log('foto',request.file.fileName)
       const data = {
         // name: request.body.name,
         image: `${IP}:${port}/upload/${request.file.fileName}`,
+<<<<<<< HEAD
         // email: request.body.email,
         // username: request.body.username,
         // password: hashPassword.passwordHash,
@@ -56,6 +56,14 @@ console.log('foto',request.file.fileName)
         // salt: hashPassword.salt,
         // status: request.body.status || '2',
         updated: new Date(),
+=======
+        email: request.body.email,
+        username: request.body.username,
+        password: hashPassword.passwordHash,
+        salt: hashPassword.salt,
+        status: request.body.status || "2",
+        updated: new Date()
+>>>>>>> cf6c9cd0eab33ba70ab81ae388983a4ac1c8b723
       };
       console.log (image)
       const result = await userModel.updateData(data, userId);
@@ -64,11 +72,14 @@ console.log('foto',request.file.fileName)
         id:userId}
       miscHelper.response(response, 200,newData);
     } catch (error) {
+<<<<<<< HEAD
       console.log(error)
       // miscHelper.customErrorResponse(response, 400, 'Fail update user');
+=======
+      miscHelper.customErrorResponse(response, 400, "Fail update user");
+>>>>>>> cf6c9cd0eab33ba70ab81ae388983a4ac1c8b723
     }
   },
-  //
   deleteData: async (request, response) => {
     try {
       const userId = request.params.userId;
@@ -78,10 +89,9 @@ console.log('foto',request.file.fileName)
       }
       miscHelper.response(response, 200, deleteUser);
     } catch (error) {
-      miscHelper.customErrorResponse(response, 400, 'Fail delete');
+      miscHelper.customErrorResponse(response, 400, "Fail delete");
     }
   },
-  //
   register: async (request, response) => {
     try {
       const id = uuidv4();
@@ -96,13 +106,10 @@ console.log('foto',request.file.fileName)
         email: request.body.email,
         username: request.body.username,
         password: hashPassword.passwordHash,
-        alamat: request.body.alamat,
-        provinsi: request.body.provinsi,
-        kota: request.body.kota,
         salt: hashPassword.salt,
-        status: request.body.status || '2',
+        status: request.body.status || "2",
         created: new Date(),
-        updated: new Date(),
+        updated: new Date()
       };
       console.log(data)
       const result = await userModel.register(data);
@@ -128,45 +135,38 @@ console.log('foto',request.file.fileName)
       miscHelper.customErrorResponse(
         response,
         400,
-        'Register fail user has been added'
+        "Register fail user has been added"
       );
     }
   },
-  //
   login: async (request, response) => {
-    try {
-      const data = {
-        password: request.body.password,
-        email: request.body.email,
-      };
+    const data = {
+      password: request.body.password,
+      email: request.body.email
+    };
 
-      const emailValid = await userModel.checkEmail(data.email);
-      const dataUser = emailValid[0];
-      const hashPassword = helper.setPassword(data.password, dataUser.salt);
-      if (
-        hashPassword.passwordHash === dataUser.password &&
-        emailValid.length > 0
-      ) {
-        const token = JWT.sign(
-          {
-            email: dataUser.email,
-            id: dataUser.id,
-          },
-          JWT_KEY,
-          { expiresIn: '9h' }
-        );
+    const emailValid = await userModel.checkEmail(data.email);
+    const dataUser = emailValid[0];
+    const hashPassword = helper.setPassword(data.password, dataUser.salt);
 
-        delete dataUser.salt;
-        delete dataUser.password;
+    if (hashPassword.passwordHash === dataUser.password) {
+      const token = JWT.sign(
+        {
+          email: dataUser.email,
+          id: dataUser.id
+        },
+        JWT_KEY,
+        { expiresIn: "9h" }
+      );
 
-        dataUser.token = token;
+      delete dataUser.salt;
+      delete dataUser.password;
 
-        response.json(dataUser);
-      } else {
-        miscHelper.customErrorResponse(response, 400, 'wrong password');
-      }
-    } catch (error) {
-      miscHelper.customErrorResponse(response, 400, 'email not found');
+      dataUser.token = token;
+
+      response.json(dataUser);
+    } else {
+      miscHelper.customErrorResponse(response, 400, "Fail login", error);
     }
-  },
+  }
 };
