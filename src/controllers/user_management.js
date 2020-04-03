@@ -46,7 +46,6 @@ console.log('foto',request.file.fileName)
       const data = {
         // name: request.body.name,
         image: `${IP}:${port}/upload/${request.file.fileName}`,
-<<<<<<< HEAD
         // email: request.body.email,
         // username: request.body.username,
         // password: hashPassword.passwordHash,
@@ -56,14 +55,6 @@ console.log('foto',request.file.fileName)
         // salt: hashPassword.salt,
         // status: request.body.status || '2',
         updated: new Date(),
-=======
-        email: request.body.email,
-        username: request.body.username,
-        password: hashPassword.passwordHash,
-        salt: hashPassword.salt,
-        status: request.body.status || "2",
-        updated: new Date()
->>>>>>> cf6c9cd0eab33ba70ab81ae388983a4ac1c8b723
       };
       console.log (image)
       const result = await userModel.updateData(data, userId);
@@ -72,12 +63,7 @@ console.log('foto',request.file.fileName)
         id:userId}
       miscHelper.response(response, 200,newData);
     } catch (error) {
-<<<<<<< HEAD
-      console.log(error)
-      // miscHelper.customErrorResponse(response, 400, 'Fail update user');
-=======
       miscHelper.customErrorResponse(response, 400, "Fail update user");
->>>>>>> cf6c9cd0eab33ba70ab81ae388983a4ac1c8b723
     }
   },
   deleteData: async (request, response) => {
