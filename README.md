@@ -2,7 +2,7 @@
 ![](https://img.shields.io/badge/Dependencies-Express-green.svg)
 ![](https://img.shields.io/badge/License-Beerware-yellowgreen.svg)
 
-# Totalin -Point of Sales Application-
+# Gayain -fashion ecommerce-
 ---
 
 ## Table of Contents
@@ -16,9 +16,7 @@
 ---
 
 ## Introduction
-Point Of Sale (POS) is an application that used to handle transcation on retail bussiness.
-
-The application is written in Javascript language with MySQL (or MariaDB) ad the database. 
+Gayain is an e-commerce platform. The business transactions are mainly designed in the mobile version while the business management runs in web platform. This app built with React Native, ReactJs and using API Raja Ongkir as the 3rd party for check the shipment fee. 
 
 ---
 
